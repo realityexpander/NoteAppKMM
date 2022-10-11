@@ -1,7 +1,7 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    id("com.squareup.sqldelight")
+    id("com.squareup.sqldelight")  // for database
 }
 
 kotlin {
@@ -20,8 +20,8 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("com.squareup.sqldelight:runtime:1.5.3")
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
+                implementation("com.squareup.sqldelight:runtime:1.5.3")         // Database written in Kotlin
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")  // date functions in Kotlin
             }
         }
         val commonTest by getting {
@@ -31,7 +31,7 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation("com.squareup.sqldelight:android-driver:1.5.3")
+                implementation("com.squareup.sqldelight:android-driver:1.5.3")  // DB Driver for Android
             }
         }
         val androidTest by getting
@@ -40,7 +40,7 @@ kotlin {
         val iosSimulatorArm64Main by getting
         val iosMain by creating {
             dependencies {
-                implementation("com.squareup.sqldelight:native-driver:1.5.3")
+                implementation("com.squareup.sqldelight:native-driver:1.5.3")  // DB Driver for iOS
             }
 
             dependsOn(commonMain)
@@ -62,13 +62,13 @@ kotlin {
 
 sqldelight {
     database("NoteDatabase") {
-        packageName = "com.plcoding.noteappkmm.database"
-        sourceFolders = listOf("sqldelight")
+        packageName = "com.realityexpander.noteappkmm.database"
+        sourceFolders = listOf("sqldelight")  // folder for database files
     }
 }
 
 android {
-    namespace = "com.plcoding.noteappkmm"
+    namespace = "com.realityexpander.noteappkmm"
     compileSdk = 33
     defaultConfig {
         minSdk = 21

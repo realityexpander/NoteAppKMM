@@ -1,15 +1,15 @@
 plugins {
     id("com.android.application")
     kotlin("android")
-    id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
+    id("kotlin-kapt") // for kapt annotation processor
+    id("dagger.hilt.android.plugin")  // for Hilt/Dagger
 }
 
 android {
-    namespace = "com.plcoding.noteappkmm.android"
+    namespace = "com.realityexpander.noteappkmm.android"
     compileSdk = 33
     defaultConfig {
-        applicationId = "com.plcoding.noteappkmm.android"
+        applicationId = "com.realityexpander.noteappkmm.android"
         minSdk = 21
         targetSdk = 33
         versionCode = 1
@@ -19,7 +19,7 @@ android {
         compose = true
     }
     compileOptions {
-        isCoreLibraryDesugaringEnabled = true
+        isCoreLibraryDesugaringEnabled = true  // Use java date-time library from API 21+ instead of 26+
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.3.0"
@@ -44,7 +44,7 @@ dependencies {
     implementation("androidx.compose.foundation:foundation:1.2.1")
     implementation("androidx.compose.material:material:1.2.1")
     implementation("androidx.activity:activity-compose:1.5.1")
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")  // later versions cause problems
 
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
 
