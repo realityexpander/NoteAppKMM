@@ -20,7 +20,12 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.realityexpander.noteappkmm.android.note_detail.NoteDetailScreen
 import com.realityexpander.noteappkmm.android.note_list.NoteListScreen
+import com.realityexpander.noteappkmm.domain.time.DateTimeUtil
+import com.realityexpander.noteappkmm.domain.time.DateTimeUtil.formatted
+import com.realityexpander.noteappkmm.domain.time.DateTimeUtil.formattedDate
+import com.realityexpander.noteappkmm.domain.time.DateTimeUtil.formattedDateTime
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.datetime.LocalDateTime
 
 @Composable
 fun MyApplicationTheme(
@@ -88,4 +93,16 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+}
+
+fun main() {
+    //val now = DateTimeUtil.now()
+
+    val now = LocalDateTime(2022, 10, 22, 23, 15, 0)
+
+    println(now)
+    println(now.formatted)
+    println(now.formattedDate)
+    println(now.formattedDateTime)
+    println(DateTimeUtil.formatNoteDate(now))
 }
