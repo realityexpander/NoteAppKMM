@@ -2,6 +2,8 @@ plugins {
     kotlin("multiplatform")
     id("com.android.library")
     id("com.squareup.sqldelight")  // for database
+    id("kotlin-parcelize")
+    id("kotlin-kapt")
 }
 
 kotlin {

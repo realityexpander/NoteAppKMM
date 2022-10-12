@@ -35,7 +35,7 @@ fun NoteListScreen(
     val state by viewModel.state.collectAsState()
 
     LaunchedEffect(key1 = true) {
-        viewModel.loadNotes()
+        viewModel.loadNotes() // must load the initial notes manually, because we are not using a StateFlow
     }
 
     Scaffold(
