@@ -8,6 +8,7 @@ import com.realityexpander.noteappkmm.domain.note.NoteDataSource
 class DatabaseModule {
 
     private val factory by lazy { DatabaseDriverFactory() }
+
     val noteDataSource: NoteDataSource by lazy {
         SqlDelightNoteDataSource(NoteDatabase(factory.createDriver()))
     }
