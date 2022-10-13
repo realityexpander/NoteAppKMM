@@ -32,7 +32,7 @@ class NoteDetailViewModel @Inject constructor(
     private val isNoteContentFocused =
         savedStateHandle.getStateFlow(IS_NOTE_CONTENT_FOCUSED, false)
     private val noteColor =
-        savedStateHandle.getStateFlow(NOTE_COLOR, Note.generateRandomColor())
+        savedStateHandle.getStateFlow(NOTE_COLOR, Note.getRandomNoteColor())
 
     val state = combine(
         noteTitle,
