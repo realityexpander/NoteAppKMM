@@ -7,25 +7,33 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.realityexpander.noteappkmm.domain.note.Note
+import com.realityexpander.noteappkmm.domain.note.NoteDataSource
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.datetime.LocalDateTime
 
 @Composable
 fun NoteDetailScreen(
     noteId: Long,
     navController: NavController,
-    viewModel: NoteDetailViewModel = hiltViewModel()
+    viewModel: NoteDetailViewModel = hiltViewModel(),
+    previewState: NoteDetailState? = null // For preview in IDE
 ) {
-    val state by viewModel.state.collectAsState()
+    val state = previewState ?: viewModel.state.collectAsState().value
+    // val state by viewModel.state.collectAsState()
     val hasNoteBeenSaved by viewModel.hasNoteBeenSaved.collectAsState()
 
     LaunchedEffect(key1 = hasNoteBeenSaved) {
@@ -82,3 +90,97 @@ fun NoteDetailScreen(
         }
     }
 }
+
+
+@Preview(heightDp = 300)
+@Composable
+fun NoteDetailScreenPreview() {
+    val note = Note(
+        id = 1,
+        title = "Note title",
+        content = "Note content",
+        colorHex = 0xFFE57373,
+        created = LocalDateTime.parse("2021-08-01T00:00:00")
+    )
+    val state = NoteDetailState(
+        noteTitle = note.title,
+        noteContent = note.content,
+        noteColor = note.colorHex.toLong(),
+        isNoteTitleHintVisible = false,
+        isNoteContentHintVisible = false
+    )
+    NoteDetailScreen(
+        noteId = 1,
+        navController = NavController(LocalContext.current),
+        viewModel = NoteDetailViewModel(
+            object: NoteDataSource {
+                override suspend fun insertNote(note: Note) {
+                    /* no-op */
+                }
+                override suspend fun getNoteById(id: Long): Note {
+                    return Note(
+                        id = 1,
+                        title = "Title",
+                        content = "Content",
+                        colorHex = 0xFFE57373,
+                        created = LocalDateTime.parse("2021-01-01T00:00:00")
+                    )
+                }
+                override suspend fun getAllNotes(): List<Note> {
+                    /* no-op */
+                    return emptyList()
+                }
+                override suspend fun deleteNoteById(id: Long) {
+                    /* no-op */
+                }
+            },
+            savedStateHandle = SavedStateHandle().apply {
+                set("noteId", 1L)
+            }
+        ),
+        previewState = state
+    )
+}
+
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun NoteDetailScreenPreviewDeviceInteractive() {
+
+    val viewModel = NoteDetailViewModel(
+        object: NoteDataSource {
+            override suspend fun insertNote(note: Note) {
+                /* no-op */
+            }
+            override suspend fun getNoteById(id: Long): Note {
+                return Note(
+                    id = 1,
+                    title = "Title",
+                    content = "Content",
+                    colorHex = 0xFFE57373,
+                    created = LocalDateTime.parse("2021-01-01T00:00:00")
+                )
+            }
+            override suspend fun getAllNotes(): List<Note> {
+                /* no-op */
+                return emptyList()
+            }
+            override suspend fun deleteNoteById(id: Long) {
+                /* no-op */
+            }
+        },
+        savedStateHandle = SavedStateHandle().apply {
+            set("noteId", 1L)
+        }
+    )
+
+    val state by viewModel.state.collectAsState()
+
+    NoteDetailScreen(
+        noteId = 1L,
+        navController = NavController(LocalContext.current),
+        viewModel = viewModel,
+        //previewState = state
+    )
+}
+

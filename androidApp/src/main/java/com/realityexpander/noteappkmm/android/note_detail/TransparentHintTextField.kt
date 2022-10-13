@@ -56,3 +56,15 @@ fun TransparentHintTextFieldPreview() {
         onFocusChanged = {}
     )
 }
+
+@Preview
+@Composable
+fun TransparentHintTextFieldPreview2() {
+    TransparentHintTextField(
+        text = "",
+        hint = "Title",
+        isHintVisible = true,
+        onValueChanged = {},
+        onFocusChanged = {}
+    )
+}

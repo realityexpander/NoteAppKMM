@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.realityexpander.noteappkmm.domain.note.Note
@@ -67,4 +68,38 @@ fun NoteItem(
             modifier = Modifier.align(Alignment.End)
         )
     }
+}
+
+@Preview(widthDp = 300, backgroundColor = 0x00000000, showBackground = true)
+@Composable
+fun NoteItemPreview() {
+    NoteItem(
+        note = Note(
+            id = 0,
+            title = "Note title",
+            content = "Note content",
+            colorHex = 0xFFE57373,
+            created = DateTimeUtil.now()
+        ),
+        backgroundColor = Color(0xFFE57373),
+        onNoteClick = {},
+        onDeleteClick = {}
+    )
+}
+
+@Preview(heightDp = 300, backgroundColor = 0x00000000, showBackground = true)
+@Composable
+fun NoteItemPreview2() {
+    NoteItem(
+        note = Note(
+            id = 0,
+            title = "Different title",
+            content = "Different content",
+            colorHex = 0xFF737355,
+            created = DateTimeUtil.now()
+        ),
+        backgroundColor = Color(0xFF737355),
+        onNoteClick = {},
+        onDeleteClick = {}
+    )
 }
