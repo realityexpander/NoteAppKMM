@@ -2,7 +2,6 @@ package com.realityexpander.noteappkmm
 
 import com.realityexpander.noteappkmm.presentation.*
 import kotlinx.datetime.LocalDateTime
-import kotlinx.wasm.jsinterop.Object
 
 // Note: no need to define CommonParcelize here (bc its @OptionalExpectation)
 actual interface CommonParcelable  // not used on iOS

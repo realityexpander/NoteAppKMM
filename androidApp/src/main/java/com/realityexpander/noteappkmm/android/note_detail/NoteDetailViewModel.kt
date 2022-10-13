@@ -12,10 +12,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 const val NOTE_TITLE = "noteTitle"
-const val NOTE_CONTENT = "noteContent"
-const val NOTE_COLOR = "noteColor"
 const val IS_NOTE_TITLE_FOCUSED = "isNoteTitleFocused"
+const val NOTE_CONTENT = "noteContent"
 const val IS_NOTE_CONTENT_FOCUSED = "isNoteContentFocused"
+const val NOTE_COLOR = "noteColor"
 
 @HiltViewModel
 class NoteDetailViewModel @Inject constructor(
@@ -57,9 +57,11 @@ class NoteDetailViewModel @Inject constructor(
 
     init {
         savedStateHandle.get<Long>("noteId")?.let { existingNoteId ->
+            // navigation doesn't support nullable types, so we have to use a -1L to indicate a new note
             if(existingNoteId == -1L) {
                 return@let
             }
+
             this.existingNoteId = existingNoteId
             viewModelScope.launch {
                 noteDataSource.getNoteById(existingNoteId)?.let { note ->
