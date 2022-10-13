@@ -11,20 +11,28 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+const val NOTE_TITLE = "noteTitle"
+const val NOTE_CONTENT = "noteContent"
+const val NOTE_COLOR = "noteColor"
+const val IS_NOTE_TITLE_FOCUSED = "isNoteTitleFocused"
+const val IS_NOTE_CONTENT_FOCUSED = "isNoteContentFocused"
+
 @HiltViewModel
 class NoteDetailViewModel @Inject constructor(
     private val noteDataSource: NoteDataSource,
     private val savedStateHandle: SavedStateHandle
 ): ViewModel() {
 
-    private val noteTitle = savedStateHandle.getStateFlow("noteTitle", "")
-    private val isNoteTitleFocused = savedStateHandle.getStateFlow("isNoteTitleFocused", false)
-    private val noteContent = savedStateHandle.getStateFlow("noteContent", "")
-    private val isNoteContentFocused = savedStateHandle.getStateFlow("isNoteContentFocused", false)
-    private val noteColor = savedStateHandle.getStateFlow(
-        "noteColor",
-        Note.generateRandomColor()
-    )
+    private val noteTitle =
+        savedStateHandle.getStateFlow(NOTE_TITLE, "")
+    private val isNoteTitleFocused =
+        savedStateHandle.getStateFlow(IS_NOTE_TITLE_FOCUSED, false)
+    private val noteContent =
+        savedStateHandle.getStateFlow(NOTE_CONTENT, "")
+    private val isNoteContentFocused =
+        savedStateHandle.getStateFlow(IS_NOTE_CONTENT_FOCUSED, false)
+    private val noteColor =
+        savedStateHandle.getStateFlow(NOTE_COLOR, Note.generateRandomColor())
 
     val state = combine(
         noteTitle,
@@ -55,28 +63,28 @@ class NoteDetailViewModel @Inject constructor(
             this.existingNoteId = existingNoteId
             viewModelScope.launch {
                 noteDataSource.getNoteById(existingNoteId)?.let { note ->
-                    savedStateHandle["noteTitle"] = note.title
-                    savedStateHandle["noteContent"] = note.content
-                    savedStateHandle["noteColor"] = note.colorHex
+                    savedStateHandle[NOTE_TITLE] = note.title
+                    savedStateHandle[NOTE_CONTENT] = note.content
+                    savedStateHandle[NOTE_COLOR] = note.colorHex
                 }
             }
         }
     }
 
     fun onNoteTitleChanged(text: String) {
-        savedStateHandle["noteTitle"] = text
+        savedStateHandle[NOTE_TITLE] = text
     }
 
     fun onNoteContentChanged(text: String) {
-        savedStateHandle["noteContent"] = text
+        savedStateHandle[NOTE_CONTENT] = text
     }
 
     fun onNoteTitleFocusChanged(isFocused: Boolean) {
-        savedStateHandle["isNoteTitleFocused"] = isFocused
+        savedStateHandle[IS_NOTE_TITLE_FOCUSED] = isFocused
     }
 
     fun onNoteContentFocusChanged(isFocused: Boolean) {
-        savedStateHandle["isNoteContentFocused"] = isFocused
+        savedStateHandle[IS_NOTE_CONTENT_FOCUSED] = isFocused
     }
 
     fun saveNote() {
