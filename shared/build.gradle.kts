@@ -4,6 +4,7 @@ plugins {
     id("com.squareup.sqldelight")  // for database
     id("kotlin-parcelize")
     id("kotlin-kapt")
+    kotlin("plugin.serialization") version "1.5.30"
 }
 
 kotlin {
@@ -24,6 +25,7 @@ kotlin {
             dependencies {
                 implementation("com.squareup.sqldelight:runtime:1.5.3")         // Database written in Kotlin
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")  // date functions in Kotlin
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")  // JSON serialization
             }
         }
         val commonTest by getting {
@@ -31,12 +33,14 @@ kotlin {
                 implementation(kotlin("test"))
             }
         }
+
         val androidMain by getting {
             dependencies {
                 implementation("com.squareup.sqldelight:android-driver:1.5.3")  // DB Driver for Android
             }
         }
         val androidTest by getting
+
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting

@@ -2,12 +2,10 @@ package com.realityexpander.noteappkmm
 
 import com.realityexpander.noteappkmm.presentation.*
 import kotlinx.datetime.LocalDateTime
+import kotlinx.wasm.jsinterop.Object
 
-// Note: no need to define CommonParcelize here (its optional)
-actual interface CommonParcelable
-
-// -----------------------------------
-
-actual annotation class CommonTypeParceler<T, P : CommonParceler<in T>>()
-actual interface CommonParceler<T>
-actual object LocalDateTimeParceler : CommonParceler<LocalDateTime>
+// Note: no need to define CommonParcelize here (bc its @OptionalExpectation)
+actual interface CommonParcelable  // not used on iOS
+actual annotation class CommonTypeParceler<T, P : CommonParceler<in T>>  // not used on iOS
+actual interface CommonParceler<T> // not used on iOS
+actual object LocalDateTimeParceler : CommonParceler<LocalDateTime> // not used on iOS
