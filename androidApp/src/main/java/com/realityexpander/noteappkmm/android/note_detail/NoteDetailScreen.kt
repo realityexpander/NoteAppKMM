@@ -11,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -29,8 +30,15 @@ fun NoteDetailScreen(
     viewModel: NoteDetailViewModel = hiltViewModel(),
     previewState: NoteDetailState? = null // For preview in IDE
 ) {
-    val state = previewState ?: viewModel.state.collectAsState().value
+    val state = if(LocalInspectionMode.current) {
+        // For preview in IDE
+        previewState ?: viewModel.state.collectAsState().value
+    } else {
+        // For normal operation
+        viewModel.state.collectAsState().value
+    }
     // val state by viewModel.state.collectAsState()
+
     val hasNoteBeenSaved by viewModel.hasNoteBeenSaved.collectAsState()
 
     LaunchedEffect(key1 = hasNoteBeenSaved) {
