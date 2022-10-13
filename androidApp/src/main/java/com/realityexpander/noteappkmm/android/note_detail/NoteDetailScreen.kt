@@ -18,11 +18,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.realityexpander.noteappkmm.domain.note.Note
 import com.realityexpander.noteappkmm.domain.note.NoteDataSource
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDateTime
 
 @Composable

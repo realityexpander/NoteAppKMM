@@ -87,14 +87,16 @@ fun NoteItemPreview() {
     )
 }
 
-@Preview(heightDp = 300, backgroundColor = 0x00000000, showBackground = true)
+@Preview(heightDp = 200, backgroundColor = 0x00000000, showBackground = true)
 @Composable
 fun NoteItemPreview2() {
     NoteItem(
         note = Note(
             id = 0,
             title = "Different title",
-            content = "Different content",
+            content = "Here is some really long content " +
+                    "that will wrap to the next line, and then more wrapping" +
+                    "that will wrap to the next line, and then more wrapping",
             colorHex = 0xFF737355,
             created = DateTimeUtil.now()
         ),
