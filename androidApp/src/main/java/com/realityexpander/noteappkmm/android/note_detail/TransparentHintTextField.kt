@@ -10,6 +10,7 @@ import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun TransparentHintTextField(
@@ -42,4 +43,16 @@ fun TransparentHintTextField(
             )
         }
     }
+}
+
+@Preview
+@Composable
+fun TransparentHintTextFieldPreview() {
+    TransparentHintTextField(
+        text = "Title",
+        hint = "Title",
+        isHintVisible = false,
+        onValueChanged = {},
+        onFocusChanged = {}
+    )
 }
