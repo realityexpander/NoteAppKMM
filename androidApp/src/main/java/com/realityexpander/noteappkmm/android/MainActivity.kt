@@ -13,6 +13,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.view.WindowCompat
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -70,6 +71,9 @@ fun MyApplicationTheme(
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        WindowCompat.setDecorFitsSystemWindows(window, true)
+
         setContent {
             MyApplicationTheme {
                 val navController = rememberNavController()
@@ -77,6 +81,7 @@ class MainActivity : ComponentActivity() {
                     composable(route = "note_list") {
                         NoteListScreen(navController = navController)
                     }
+
                     composable(
                         route = "note_detail/{noteId}",
                         arguments = listOf(

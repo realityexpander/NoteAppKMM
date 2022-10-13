@@ -42,7 +42,7 @@ fun NoteListScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    navController.navigate("note_detail/-1L")
+                    navController.navigate("note_detail/-1L") // make a new note
                 },
                 backgroundColor = Color.Black
             ) {

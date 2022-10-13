@@ -30,7 +30,7 @@ fun NoteDetailScreen(
     viewModel: NoteDetailViewModel = hiltViewModel(),
     previewState: NoteDetailState? = null // For preview in IDE
 ) {
-    val state = if(LocalInspectionMode.current) {
+    val state = if (LocalInspectionMode.current) {
         // For preview in IDE
         previewState ?: viewModel.state.collectAsState().value
     } else {
@@ -42,7 +42,7 @@ fun NoteDetailScreen(
     val hasNoteBeenSaved by viewModel.hasNoteBeenSaved.collectAsState()
 
     LaunchedEffect(key1 = hasNoteBeenSaved) {
-        if(hasNoteBeenSaved) {
+        if (hasNoteBeenSaved) {
             navController.popBackStack()
         }
     }
@@ -61,6 +61,7 @@ fun NoteDetailScreen(
             }
         }
     ) { padding ->
+
         Column(
             modifier = Modifier
                 .background(Color(state.noteColor))
@@ -118,10 +119,11 @@ fun NoteDetailScreenPreview() {
         noteId = 1,
         navController = NavController(LocalContext.current),
         viewModel = NoteDetailViewModel(
-            object: NoteDataSource {
+            object : NoteDataSource {
                 override suspend fun insertNote(note: Note) {
                     /* no-op */
                 }
+
                 override suspend fun getNoteById(id: Long): Note {
                     return Note(
                         id = 1,
@@ -131,10 +133,12 @@ fun NoteDetailScreenPreview() {
                         created = LocalDateTime.parse("2021-01-01T00:00:00")
                     )
                 }
+
                 override suspend fun getAllNotes(): List<Note> {
                     /* no-op */
                     return emptyList()
                 }
+
                 override suspend fun deleteNoteById(id: Long) {
                     /* no-op */
                 }
@@ -153,10 +157,11 @@ fun NoteDetailScreenPreview() {
 fun NoteDetailScreenPreviewDeviceInteractive() {
 
     val viewModel = NoteDetailViewModel(
-        object: NoteDataSource {
+        object : NoteDataSource {
             override suspend fun insertNote(note: Note) {
                 /* no-op */
             }
+
             override suspend fun getNoteById(id: Long): Note {
                 return Note(
                     id = 1,
@@ -166,10 +171,12 @@ fun NoteDetailScreenPreviewDeviceInteractive() {
                     created = LocalDateTime.parse("2021-01-01T00:00:00")
                 )
             }
+
             override suspend fun getAllNotes(): List<Note> {
                 /* no-op */
                 return emptyList()
             }
+
             override suspend fun deleteNoteById(id: Long) {
                 /* no-op */
             }
