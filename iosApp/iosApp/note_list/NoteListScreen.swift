@@ -61,12 +61,46 @@ struct NoteListScreen: View {
             viewModel.setNoteDataSource(noteDataSource: noteDataSource)
         }
         .navigationBarHidden(true)
+        .hoverEffect(/*@START_MENU_TOKEN@*/.highlight/*@END_MENU_TOKEN@*/)
     }
     
 }
 
+func fundonothing() {
+    print("hello")
+}
+
 struct NoteListScreen_Previews: PreviewProvider {
+    
     static var previews: some View {
-        EmptyView()
+        VStack {
+        List {
+            ForEach(0..<10) { note in
+                Button(action: {}
+                ) {
+                    NoteItem(note: Note(
+                        id: 1,
+                        title: "hello " + String(note),
+                        content: "goodbye",
+                        colorHex: Int64(8454748548 * note),
+                        created: Kotlinx_datetimeLocalDateTime.init(
+                            date: Kotlinx_datetimeLocalDate(
+                                year: 2022,
+                                monthNumber: 10,
+                                dayOfMonth: 9),
+                            time: Kotlinx_datetimeLocalTime(
+                                hour: 5,
+                                minute: 32,
+                                second: 10,
+                                nanosecond: 0)
+                        )
+                    ),
+                    onDeleteClick: { fundonothing() }
+                )
+                }
+            }
+        }
+            Spacer()
+        }
     }
 }
