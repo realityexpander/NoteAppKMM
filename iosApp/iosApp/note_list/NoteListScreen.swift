@@ -7,7 +7,7 @@ import shared
 
 struct NoteListScreen: View {
     private var noteDataSource: NoteDataSource
-    @StateObject var viewModel = NoteListViewModel(noteDataSource: nil)
+    @StateObject var viewModel = NoteListViewModel(noteDataSource: nil)  // @StateObject Makes one instance of the viewModel (otherwise it would be re-created every time the NoteListScreen is redrawn)
     
     @State private var isNoteSelected = false
     @State private var selectedNoteId: Int64? = nil
@@ -17,11 +17,16 @@ struct NoteListScreen: View {
     }
     
     var body: some View {
-        VStack {
-            ZStack {
-                NavigationLink(destination: NoteDetailScreen(noteDataSource: self.noteDataSource, noteId: selectedNoteId), isActive: $isNoteSelected) {
-                    EmptyView()
-                }.hidden()
+        VStack {      // Like a Column in Compose
+            ZStack {  // Like a Box in Compose
+                NavigationLink(
+                    destination: NoteDetailScreen(
+                        noteDataSource: self.noteDataSource,
+                        noteId: selectedNoteId
+                    ),
+                    isActive: $isNoteSelected) {
+                        EmptyView()
+                    }.hidden()
                 HideableSearchTextField<NoteDetailScreen>(onSearchToggled: {
                     viewModel.toggleIsSearchActive()
                 }, destinationProvider: {
@@ -79,24 +84,25 @@ struct NoteListScreen_Previews: PreviewProvider {
                 ForEach(0..<10) { note in
                     Button(action: {}
                     ) {
-                        NoteItem(note: Note(
-                            id: 1,
-                            title: "hello " + String(note),
-                            content: "goodbye",
-                            colorHex: Int64(8454748548 * note),
-                            created: Kotlinx_datetimeLocalDateTime.init(
-                                date: Kotlinx_datetimeLocalDate(
-                                    year: 2022,
-                                    monthNumber: 10,
-                                    dayOfMonth: 9),
-                                time: Kotlinx_datetimeLocalTime(
-                                    hour: 5,
-                                    minute: 32,
-                                    second: 10,
-                                    nanosecond: 0)
-                            )
-                        ),
-                                 onDeleteClick: { fundonothing() }
+                        NoteItem(
+                            note: Note(
+                                id: 1,
+                                title: "hello " + String(note),
+                                content: "goodbye",
+                                colorHex: Int64(8454748548 * note),
+                                created: Kotlinx_datetimeLocalDateTime.init(
+                                    date: Kotlinx_datetimeLocalDate(
+                                        year: 2022,
+                                        monthNumber: 10,
+                                        dayOfMonth: 9),
+                                    time: Kotlinx_datetimeLocalTime(
+                                        hour: 5,
+                                        minute: 32,
+                                        second: 10,
+                                        nanosecond: 0)
+                                )
+                            ),
+                            onDeleteClick: { fundonothing() }
                         )
                     }
                 }

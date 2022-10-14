@@ -6,6 +6,8 @@
 import SwiftUI
 import shared
 
+// struct is like a value class in Kotlin, it makes a new copy every time. Like how we use .copy() in kotlin.
+
 struct NoteItem: View {
     var note: Note
     var onDeleteClick: () -> Void
@@ -18,7 +20,8 @@ struct NoteItem: View {
                     .fontWeight(.semibold)
                 Spacer()
                 Button(action: onDeleteClick) {
-                    Image(systemName: "xmark").foregroundColor(.black)
+                    Image(systemName: "xmark")
+                        .foregroundColor(.black)
                 }
             }.padding(.bottom, 3)
             
@@ -35,14 +38,21 @@ struct NoteItem: View {
         }
         .padding()
         .background(Color(hex: note.colorHex))
-        .clipShape(RoundedRectangle(cornerRadius: 5.0))
+        .clipShape(RoundedRectangle(cornerRadius: 15.0))  // makes the rounded corners
+        .shadow(radius: 2, x: 3, y: 3)
     }
 }
 
 struct NoteItem_Previews: PreviewProvider {
     static var previews: some View {
         NoteItem(
-            note: Note(id: nil, title: "My note", content: "Note content", colorHex: 0xFF2341, created: DateTimeUtil().now()),
+            note: Note(
+                id: nil,
+                title: "My note",
+                content: "Note content",
+                colorHex: 0x0FF341,
+                created: DateTimeUtil().now()
+            ),
             onDeleteClick: {}
         )
     }
