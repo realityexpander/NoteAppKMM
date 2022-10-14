@@ -9,7 +9,7 @@ struct NoteListScreen: View {
     private var noteDataSource: NoteDataSource
     @StateObject var viewModel = NoteListViewModel(noteDataSource: nil) // @StateObject Makes only one instance of the viewModel (otherwise it would be re-created every time the NoteListScreen is redrawn)
 
-    @State private var isNoteSelected = false
+    @State private var isNoteSelected = false       // @State is like mutableStateOf in Kotlin
     @State private var selectedNoteId: Int64? = nil
 
     init(noteDataSource: NoteDataSource) {
@@ -24,9 +24,9 @@ struct NoteListScreen: View {
                         noteDataSource: self.noteDataSource,
                         noteId: selectedNoteId
                     ),
-                    isActive: $isNoteSelected) {
+                    isActive: $isNoteSelected) {  // $ means use two-way binding
                         EmptyView()
-                    }.hidden()
+                    }.hidden()  // make the link invisible (kinda hacky, but works)
 
                 HideableSearchTextField<NoteDetailScreen>(
                     onSearchToggled: {
@@ -55,19 +55,19 @@ struct NoteListScreen: View {
                 ForEach(viewModel.filteredNotes, id: \.self.id) { note in
                     Button(action: {
                         isNoteSelected = true
-                        selectedNoteId = note.id?.int64Value
+                        selectedNoteId = note.id?.int64Value  // Must Convert Kotlin Long to int64Value
                     }) {
                         NoteItem(note: note, onDeleteClick: {
-                            viewModel.deleteNoteById(id: note.id?.int64Value)
+                            viewModel.deleteNoteById(id: note.id?.int64Value)  // convert kotlin Int to an int64Value
                         })
                     }
                 }
             }
             .onAppear {
-                viewModel.loadNotes()
+                viewModel.loadNotes()  // load the notes after the UI is built
             }
-            .listStyle(.plain)
-            .listRowSeparator(.hidden)
+            .listStyle(.plain)   // remove the default boxed look
+            .listRowSeparator(.hidden)  // hide the separators
         }
         .onAppear {
             viewModel.setNoteDataSource(noteDataSource: noteDataSource)
