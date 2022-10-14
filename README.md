@@ -15,6 +15,7 @@ Kotlin Multiplatform Mobile Note App. Deployable to both iOS and Android.
 - KotlinX-serializations
 - Custom @TypeParcelers for Android
 - SQLDelight Kotlin native library
+- Previews for composables and Swift UI in IDE
 
 <!--
 To install the Apk:
