@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.realityexpander.noteappkmm.domain.note.Note
 import com.realityexpander.noteappkmm.domain.note.NoteDataSource
-import com.realityexpander.noteappkmm.domain.time.DateTimeUtil
+import com.realityexpander.noteappkmm.domain.time.LocalDateTimeUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -97,7 +97,7 @@ class NoteDetailViewModel @Inject constructor(
                     title = noteTitle.value,
                     content = noteContent.value,
                     colorHex = noteColor.value,
-                    created = DateTimeUtil.now()
+                    created = LocalDateTimeUtil.now()
                 )
             )
             _hasNoteBeenSaved.value = true

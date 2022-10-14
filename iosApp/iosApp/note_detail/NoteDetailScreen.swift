@@ -10,9 +10,9 @@ struct NoteDetailScreen: View {
     private var noteDataSource: NoteDataSource
     private var noteId: Int64?
 
-    @StateObject var viewModel = NoteDetailViewModel(noteDataSource: nil)
+    @StateObject var viewModel = NoteDetailViewModel(noteDataSource: nil) // start with nil datasource
 
-    @Environment(\.presentationMode) var presentation
+    @Environment(\.presentationMode) var presentation  // @Environment similar to Android Context, presentationMode has backstack, for popping the backstack below
 
     init(noteDataSource: NoteDataSource, noteId: Int64? = nil) {
         self.noteDataSource = noteDataSource
@@ -28,7 +28,7 @@ struct NoteDetailScreen: View {
         }.toolbar(content: {
             Button(action: {
                 viewModel.saveNote {
-                    self.presentation.wrappedValue.dismiss()
+                    self.presentation.wrappedValue.dismiss()  // similar to popping the backstack
                 }
             }) {
                 Image(systemName: "checkmark")
@@ -37,13 +37,22 @@ struct NoteDetailScreen: View {
         .padding()
         .background(Color(hex: viewModel.noteColor))
         .onAppear {
-            viewModel.setParamsAndLoadNote(noteDataSource: noteDataSource, noteId: noteId)
+            viewModel.setNoteDataSourceAndLoadNote(
+                noteDataSource: noteDataSource,
+                noteId: noteId
+            )
         }
     }
 }
 
 struct NoteDetailScreen_Previews: PreviewProvider {
     static var previews: some View {
-        EmptyView()
+        NoteDetailScreen(noteDataSource: DatabaseModule().noteDataSource, noteId: -2)
+    }
+}
+
+struct NoteDetailScreen_Previews2: PreviewProvider {
+    static var previews: some View {
+        NoteDetailScreen(noteDataSource: DatabaseModule().noteDataSource, noteId: nil)
     }
 }

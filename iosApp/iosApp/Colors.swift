@@ -5,6 +5,7 @@
 import Foundation
 import SwiftUI
 
+// Similar to extension function in Kotlin, this will create a new Color based on the RGBA values passed in (from the Kotlin side as Hex value)
 extension Color {
     init(hex: Int64, alpha: Double = 1) {
         self.init(

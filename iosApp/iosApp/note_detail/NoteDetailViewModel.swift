@@ -21,6 +21,14 @@ extension NoteDetailScreen {  // Defines what the View is associated with this V
         }
 
         func loadNoteIfExists(id: Int64?) {
+            // For showing previews
+            if id == -2 {
+                noteTitle = "TEST Title"
+                noteContent = "TEST Content"
+                noteColor = Note.companion.getRandomNoteColor()
+                return
+            }
+            
             if id != nil {
                 noteId = id
                 noteDataSource?.getNoteById(id: id!, completionHandler: { note, _ in
@@ -38,13 +46,13 @@ extension NoteDetailScreen {  // Defines what the View is associated with this V
                     title: noteTitle,
                     content: noteContent,
                     colorHex: noteColor,
-                    created: DateTimeUtil().now()),
+                    created: LocalDateTimeUtil().now()),
                 completionHandler: { _ in
                     onSaved()
                 })
         }
 
-        func setParamsAndLoadNote(noteDataSource: NoteDataSource, noteId: Int64?) {
+        func setNoteDataSourceAndLoadNote(noteDataSource: NoteDataSource, noteId: Int64?) {
             self.noteDataSource = noteDataSource
             loadNoteIfExists(id: noteId)
         }

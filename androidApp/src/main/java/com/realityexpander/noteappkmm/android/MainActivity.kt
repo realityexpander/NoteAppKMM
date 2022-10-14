@@ -21,10 +21,10 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.realityexpander.noteappkmm.android.note_detail.NoteDetailScreen
 import com.realityexpander.noteappkmm.android.note_list.NoteListScreen
-import com.realityexpander.noteappkmm.domain.time.DateTimeUtil
-import com.realityexpander.noteappkmm.domain.time.DateTimeUtil.formatted
-import com.realityexpander.noteappkmm.domain.time.DateTimeUtil.formattedDate
-import com.realityexpander.noteappkmm.domain.time.DateTimeUtil.formattedDateTime
+import com.realityexpander.noteappkmm.domain.time.LocalDateTimeUtil
+import com.realityexpander.noteappkmm.domain.time.LocalDateTimeUtil.formatted
+import com.realityexpander.noteappkmm.domain.time.LocalDateTimeUtil.formattedDate
+import com.realityexpander.noteappkmm.domain.time.LocalDateTimeUtil.formattedDateTime
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.datetime.LocalDateTime
 
@@ -109,5 +109,5 @@ fun main() {
     println(now.formatted)
     println(now.formattedDate)
     println(now.formattedDateTime)
-    println(DateTimeUtil.formatNoteDate(now))
+    println(LocalDateTimeUtil.formatNoteDate(now))
 }

@@ -1,6 +1,6 @@
 package com.realityexpander.noteappkmm.domain.note
 
-import com.realityexpander.noteappkmm.domain.time.DateTimeUtil
+import com.realityexpander.noteappkmm.domain.time.LocalDateTimeUtil
 
 class SearchNotes {
 
@@ -12,7 +12,7 @@ class SearchNotes {
             it.title.trim().lowercase().contains(query.lowercase()) ||
                     it.content.trim().lowercase().contains(query.lowercase())
         }.sortedBy {
-            DateTimeUtil.toEpochMillis(it.created)
+            LocalDateTimeUtil.toEpochMillis(it.created)
         }
     }
 }

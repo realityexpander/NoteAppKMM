@@ -3,7 +3,7 @@ package com.realityexpander.noteappkmm.data.note
 import com.realityexpander.noteappkmm.database.NoteDatabase
 import com.realityexpander.noteappkmm.domain.note.Note
 import com.realityexpander.noteappkmm.domain.note.NoteDataSource
-import com.realityexpander.noteappkmm.domain.time.DateTimeUtil
+import com.realityexpander.noteappkmm.domain.time.LocalDateTimeUtil
 
 // Implements the NoteDataSource interface for SQLDelight database passed in (db)
 
@@ -17,7 +17,7 @@ class SqlDelightNoteDataSource(db: NoteDatabase): NoteDataSource {
             title = note.title,
             content = note.content,
             colorHex = note.colorHex,
-            created = DateTimeUtil.toEpochMillis(note.created)
+            created = LocalDateTimeUtil.toEpochMillis(note.created)
         )
     }
 

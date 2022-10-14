@@ -1,6 +1,6 @@
 package com.realityexpander.noteappkmm.domain.note
 
-// SQLDelight also can return a flow, but these dont work on iOS without extra setup
+// SQLDelight also can return a flow, but flows don't work on iOS without extra setup
 
 interface NoteDataSource {
     suspend fun insertNote(note: Note)

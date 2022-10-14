@@ -30,7 +30,7 @@ struct NoteItem: View {
 
             HStack {
                 Spacer()
-                Text(DateTimeUtil().formatNoteDate(dateTime: note.created))
+                Text(LocalDateTimeUtil().formatNoteDate(dateTime: note.created))
                     .font(.footnote)
                     .fontWeight(.light)
             }
@@ -50,7 +50,7 @@ struct NoteItem_Previews: PreviewProvider {
                 title: "My note",
                 content: "Note content",
                 colorHex: 0x0FF341,
-                created: DateTimeUtil().now()
+                created: LocalDateTimeUtil().now()
             ),
             onDeleteClick: {}
         )

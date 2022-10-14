@@ -20,7 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.realityexpander.noteappkmm.domain.note.Note
-import com.realityexpander.noteappkmm.domain.time.DateTimeUtil
+import com.realityexpander.noteappkmm.domain.time.LocalDateTimeUtil
 
 @Composable
 fun NoteItem(
@@ -31,7 +31,7 @@ fun NoteItem(
     modifier: Modifier = Modifier
 ) {
     val formattedDate = remember(note.created) {
-        DateTimeUtil.formatNoteDate(note.created)
+        LocalDateTimeUtil.formatNoteDate(note.created)
     }
     Column(
         modifier = modifier
@@ -79,7 +79,7 @@ fun NoteItemPreview() {
             title = "Note title",
             content = "Note content",
             colorHex = 0xFFE57373,
-            created = DateTimeUtil.now()
+            created = LocalDateTimeUtil.now()
         ),
         backgroundColor = Color(0xFFE57373),
         onNoteClick = {},
@@ -98,7 +98,7 @@ fun NoteItemPreview2() {
                     "that will wrap to the next line, and then more wrapping" +
                     "that will wrap to the next line, and then more wrapping",
             colorHex = 0xFF737355,
-            created = DateTimeUtil.now()
+            created = LocalDateTimeUtil.now()
         ),
         backgroundColor = Color(0xFF737355),
         onNoteClick = {},

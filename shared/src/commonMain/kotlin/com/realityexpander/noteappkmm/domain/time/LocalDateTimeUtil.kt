@@ -2,7 +2,7 @@ package com.realityexpander.noteappkmm.domain.time
 
 import kotlinx.datetime.*
 
-object DateTimeUtil {
+object LocalDateTimeUtil {
 
     fun now(): LocalDateTime {
         return Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
