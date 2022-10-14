@@ -10,7 +10,7 @@ struct NoteListScreen: View {
     @StateObject var viewModel = NoteListViewModel(noteDataSource: nil) // @StateObject Makes only one instance of the viewModel (otherwise it would be re-created every time the NoteListScreen is redrawn)
 
     @State private var isNoteSelected = false       // @State is like mutableStateOf in Kotlin
-    @State private var selectedNoteId: Int64? = nil
+    @State private var selectedNoteId: Int64?       // automatically set to nil be default
 
     init(noteDataSource: NoteDataSource) {
         self.noteDataSource = noteDataSource

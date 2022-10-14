@@ -2,21 +2,19 @@
 //  NoteDetailViewModel.swift
 //  iosApp
 //
-//  Created by Philipp Lackner on 26.09.22.
-//  Copyright © 2022 orgName. All rights reserved.
 //
 
 import Foundation
 import shared
 
-extension NoteDetailScreen {
+extension NoteDetailScreen {  // Defines what the View is associated with this ViewModel
     @MainActor class NoteDetailViewModel: ObservableObject {
         private var noteDataSource: NoteDataSource?
 
         private var noteId: Int64?
-        @Published var noteTitle = ""
+        @Published var noteTitle = ""      // two way binding with @Published and is also state (similar to MutableState in Compose)
         @Published var noteContent = ""
-        @Published private(set) var noteColor = Note.Companion().getRandomNoteColor()
+        @Published private(set) var noteColor = Note.companion.getRandomNoteColor()
 
         init(noteDataSource: NoteDataSource? = nil) {
             self.noteDataSource = noteDataSource
@@ -28,15 +26,15 @@ extension NoteDetailScreen {
                 noteDataSource?.getNoteById(id: id!, completionHandler: { note, _ in
                     self.noteTitle = note?.title ?? ""
                     self.noteContent = note?.content ?? ""
-                    self.noteColor = note?.colorHex ?? Note.Companion().getRandomNoteColor()
+                    self.noteColor = note?.colorHex ?? Note.companion.getRandomNoteColor()
                 })
             }
         }
 
-        func saveNote(onSaved: @escaping () -> Void) {
+        func saveNote(onSaved: @escaping () -> Void) {  // `@escaping` allows the completion handler to return even if this caller is out of scope.
             noteDataSource?.insertNote(
                 note: Note(
-                    id: noteId == nil ? nil : KotlinLong(value: noteId!),
+                    id: noteId == nil ? nil : KotlinLong(value: noteId!),  // Need to use a KotlinLong for the Domain model, not int64
                     title: noteTitle,
                     content: noteContent,
                     colorHex: noteColor,
