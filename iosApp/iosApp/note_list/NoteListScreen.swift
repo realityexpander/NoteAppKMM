@@ -74,33 +74,37 @@ struct NoteListScreen_Previews: PreviewProvider {
     
     static var previews: some View {
         VStack {
-        List {
-            ForEach(0..<10) { note in
-                Button(action: {}
-                ) {
-                    NoteItem(note: Note(
-                        id: 1,
-                        title: "hello " + String(note),
-                        content: "goodbye",
-                        colorHex: Int64(8454748548 * note),
-                        created: Kotlinx_datetimeLocalDateTime.init(
-                            date: Kotlinx_datetimeLocalDate(
-                                year: 2022,
-                                monthNumber: 10,
-                                dayOfMonth: 9),
-                            time: Kotlinx_datetimeLocalTime(
-                                hour: 5,
-                                minute: 32,
-                                second: 10,
-                                nanosecond: 0)
+
+            List {
+                ForEach(0..<10) { note in
+                    Button(action: {}
+                    ) {
+                        NoteItem(note: Note(
+                            id: 1,
+                            title: "hello " + String(note),
+                            content: "goodbye",
+                            colorHex: Int64(8454748548 * note),
+                            created: Kotlinx_datetimeLocalDateTime.init(
+                                date: Kotlinx_datetimeLocalDate(
+                                    year: 2022,
+                                    monthNumber: 10,
+                                    dayOfMonth: 9),
+                                time: Kotlinx_datetimeLocalTime(
+                                    hour: 5,
+                                    minute: 32,
+                                    second: 10,
+                                    nanosecond: 0)
+                            )
+                        ),
+                                 onDeleteClick: { fundonothing() }
                         )
-                    ),
-                    onDeleteClick: { fundonothing() }
-                )
+                    }
                 }
             }
+            //.onAppear(perform: { // Hack to make the list pop to top of screen
+            //    UITableView.appearance().contentInset.top = -35
+            //})
         }
-            Spacer()
-        }
+        .padding(.top, -35.0) // Hack to make the list pop to top of screen
     }
 }
