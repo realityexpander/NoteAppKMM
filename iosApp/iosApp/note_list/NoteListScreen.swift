@@ -28,12 +28,12 @@ struct NoteListScreen: View {
                         EmptyView()
                     }.hidden()  // make the link invisible (kinda hacky, but works)
 
-                HideableSearchTextField<NoteDetailScreen>(
+                HideableSearchTextField<NoteDetailScreen>(  // Where to nav to.
                     onSearchToggled: {
                         viewModel.toggleIsSearchActive()
                     },
                     destinationProvider: {
-                        NoteDetailScreen(
+                        NoteDetailScreen(  // must match above, where we want to nav to.
                             noteDataSource: noteDataSource,
                             noteId: selectedNoteId
                         )
