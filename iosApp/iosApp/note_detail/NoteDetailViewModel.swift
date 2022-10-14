@@ -21,7 +21,7 @@ extension NoteDetailScreen {  // Defines what the View is associated with this V
         }
 
         func loadNoteIfExists(id: Int64?) {
-            // For showing previews
+            // For showing previews in Xcode
             if id == -2 {
                 noteTitle = "TEST Title"
                 noteContent = "TEST Content"

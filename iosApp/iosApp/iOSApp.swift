@@ -6,7 +6,7 @@ import shared
 @main
 struct iOSApp: App {
     
-    public let databaseModule = DatabaseModule()
+    private let databaseModule = DatabaseModule()
     
 	var body: some Scene {
         WindowGroup {
