@@ -32,7 +32,7 @@ struct NoteListScreen: View {
                 }, isSearchActive: viewModel.isSearchActive, searchText: $viewModel.searchText)
                 .frame(maxWidth: .infinity, minHeight: 40)
                 .padding()
-                
+
                 if !viewModel.isSearchActive {
                     Text("All notes")
                         .font(.title2)
@@ -60,7 +60,9 @@ struct NoteListScreen: View {
         .onAppear {
             viewModel.setNoteDataSource(noteDataSource: noteDataSource)
         }
+        .navigationBarHidden(true)
     }
+    
 }
 
 struct NoteListScreen_Previews: PreviewProvider {

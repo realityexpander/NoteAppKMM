@@ -16,7 +16,7 @@ extension NoteDetailScreen {
         private var noteId: Int64? = nil
         @Published var noteTitle = ""
         @Published var noteContent = ""
-        @Published private(set) var noteColor = Note.Companion().generateRandomColor()
+        @Published private(set) var noteColor = Note.Companion().getRandomNoteColor()
         
         init(noteDataSource: NoteDataSource? = nil) {
             self.noteDataSource = noteDataSource
@@ -28,7 +28,7 @@ extension NoteDetailScreen {
                 noteDataSource?.getNoteById(id: id!, completionHandler: { note, error in
                     self.noteTitle = note?.title ?? ""
                     self.noteContent = note?.content ?? ""
-                    self.noteColor = note?.colorHex ?? Note.Companion().generateRandomColor()
+                    self.noteColor = note?.colorHex ?? Note.Companion().getRandomNoteColor()
                 })
             }
         }
