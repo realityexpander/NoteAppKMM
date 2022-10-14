@@ -2,16 +2,15 @@
 //  NoteItem.swift
 //  iosApp
 
-
-import SwiftUI
 import shared
+import SwiftUI
 
 // struct is like a value class in Kotlin, it makes a new copy every time. Like how we use .copy() in kotlin.
 
 struct NoteItem: View {
     var note: Note
     var onDeleteClick: () -> Void
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -24,11 +23,11 @@ struct NoteItem: View {
                         .foregroundColor(.black)
                 }
             }.padding(.bottom, 3)
-            
+
             Text(note.content)
                 .fontWeight(.light)
                 .padding(.bottom, 3)
-            
+
             HStack {
                 Spacer()
                 Text(DateTimeUtil().formatNoteDate(dateTime: note.created))
@@ -38,7 +37,7 @@ struct NoteItem: View {
         }
         .padding()
         .background(Color(hex: note.colorHex))
-        .clipShape(RoundedRectangle(cornerRadius: 15.0))  // makes the rounded corners
+        .clipShape(RoundedRectangle(cornerRadius: 15.0)) // makes the rounded corners
         .shadow(radius: 2, x: 3, y: 3)
     }
 }

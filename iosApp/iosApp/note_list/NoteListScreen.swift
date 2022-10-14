@@ -2,23 +2,23 @@
 //  NoteListScreen.swift
 //  iosApp
 
-import SwiftUI
 import shared
+import SwiftUI
 
 struct NoteListScreen: View {
     private var noteDataSource: NoteDataSource
-    @StateObject var viewModel = NoteListViewModel(noteDataSource: nil)  // @StateObject Makes one instance of the viewModel (otherwise it would be re-created every time the NoteListScreen is redrawn)
-    
+    @StateObject var viewModel = NoteListViewModel(noteDataSource: nil) // @StateObject Makes only one instance of the viewModel (otherwise it would be re-created every time the NoteListScreen is redrawn)
+
     @State private var isNoteSelected = false
     @State private var selectedNoteId: Int64? = nil
-    
+
     init(noteDataSource: NoteDataSource) {
         self.noteDataSource = noteDataSource
     }
-    
+
     var body: some View {
-        VStack {      // Like a Column in Compose
-            ZStack {  // Like a Box in Compose
+        VStack { // Like a Column in Compose
+            ZStack { // Like a Box in Compose
                 NavigationLink(
                     destination: NoteDetailScreen(
                         noteDataSource: self.noteDataSource,
@@ -27,14 +27,20 @@ struct NoteListScreen: View {
                     isActive: $isNoteSelected) {
                         EmptyView()
                     }.hidden()
-                HideableSearchTextField<NoteDetailScreen>(onSearchToggled: {
-                    viewModel.toggleIsSearchActive()
-                }, destinationProvider: {
-                    NoteDetailScreen(
-                        noteDataSource: noteDataSource,
-                        noteId: selectedNoteId
-                    )
-                }, isSearchActive: viewModel.isSearchActive, searchText: $viewModel.searchText)
+
+                HideableSearchTextField<NoteDetailScreen>(
+                    onSearchToggled: {
+                        viewModel.toggleIsSearchActive()
+                    },
+                    destinationProvider: {
+                        NoteDetailScreen(
+                            noteDataSource: noteDataSource,
+                            noteId: selectedNoteId
+                        )
+                    },
+                    isSearchActive: viewModel.isSearchActive,
+                    searchText: $viewModel.searchText
+                )
                 .frame(maxWidth: .infinity, minHeight: 40)
                 .padding()
 
@@ -43,8 +49,9 @@ struct NoteListScreen: View {
                         .font(.title2)
                 }
             }
-            
+
             List {
+                // `\.self` gets the hash of the item, ie: viewModel.filteredNotes[x].hashCode, and the `\.self.id` gets the id, ie: viewModel.filteredNotes[x].id
                 ForEach(viewModel.filteredNotes, id: \.self.id) { note in
                     Button(action: {
                         isNoteSelected = true
@@ -66,9 +73,8 @@ struct NoteListScreen: View {
             viewModel.setNoteDataSource(noteDataSource: noteDataSource)
         }
         .navigationBarHidden(true)
-        .hoverEffect(/*@START_MENU_TOKEN@*/.highlight/*@END_MENU_TOKEN@*/)
+        .hoverEffect(/*@START_MENU_TOKEN@*/ .highlight/*@END_MENU_TOKEN@*/)
     }
-    
 }
 
 func fundonothing() {
@@ -76,12 +82,10 @@ func fundonothing() {
 }
 
 struct NoteListScreen_Previews: PreviewProvider {
-    
     static var previews: some View {
         VStack {
-
             List {
-                ForEach(0..<10) { note in
+                ForEach(0 ..< 10) { note in
                     Button(action: {}
                     ) {
                         NoteItem(
@@ -90,7 +94,7 @@ struct NoteListScreen_Previews: PreviewProvider {
                                 title: "hello " + String(note),
                                 content: "goodbye",
                                 colorHex: Int64(8454748548 * note),
-                                created: Kotlinx_datetimeLocalDateTime.init(
+                                created: Kotlinx_datetimeLocalDateTime(
                                     date: Kotlinx_datetimeLocalDate(
                                         year: 2022,
                                         monthNumber: 10,
@@ -107,9 +111,9 @@ struct NoteListScreen_Previews: PreviewProvider {
                     }
                 }
             }
-            //.onAppear(perform: { // Hack to make the list pop to top of screen
+            // .onAppear(perform: { // Hack to make the list pop to top of screen
             //    UITableView.appearance().contentInset.top = -35
-            //})
+            // })
         }
         .padding(.top, -35.0) // Hack to make the list pop to top of screen
     }
