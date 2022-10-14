@@ -144,7 +144,11 @@ fun NoteDetailScreenPreview() {
                 }
             },
             savedStateHandle = SavedStateHandle().apply {
-                set("noteId", 1L)
+                set(PARAM_NOTE_TITLE, "noteTitle")
+                set(PARAM_IS_NOTE_TITLE_FOCUSED, false)
+                set(PARAM_NOTE_CONTENT, "noteContent")
+                set(PARAM_IS_NOTE_CONTENT_FOCUSED, false)
+                set(PARAM_NOTE_COLOR, 0xFFE57373)
             }
         ),
         previewState = state
@@ -182,7 +186,11 @@ fun NoteDetailScreenPreviewDeviceInteractive() {
             }
         },
         savedStateHandle = SavedStateHandle().apply {
-            set("noteId", 1L)
+            set(PARAM_NOTE_TITLE, "noteTitle")
+            set(PARAM_IS_NOTE_TITLE_FOCUSED, false)
+            set(PARAM_NOTE_CONTENT, "noteContent")
+            set(PARAM_IS_NOTE_CONTENT_FOCUSED, false)
+            set(PARAM_NOTE_COLOR, 0xFFE57373)
         }
     )
 

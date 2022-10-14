@@ -13,19 +13,23 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+const val PARAM_NOTES = "notes"
+const val PARAM_SEARCH_QUERY = "searchQuery"
+const val PARAM_IS_SEARCH_FOCUSED = "isSearchFocused"
+
 @HiltViewModel
 class NoteListViewModel @Inject constructor(
     private val noteDataSource: NoteDataSource,
-    private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle,
 ): ViewModel() {
 
     private val searchNotes = SearchNotes()
 
-    private val notes = savedStateHandle.getStateFlow("notes", emptyList<Note>())
-    private val searchText = savedStateHandle.getStateFlow("searchText", "")
-    private val isSearchActive = savedStateHandle.getStateFlow("isSearchActive", false)
+    private val notes = savedStateHandle.getStateFlow(PARAM_NOTES, emptyList<Note>())
+    private val searchQuery = savedStateHandle.getStateFlow(PARAM_SEARCH_QUERY, "")
+    private val isSearchFocused = savedStateHandle.getStateFlow(PARAM_IS_SEARCH_FOCUSED, false)
 
-    val state = combine(notes, searchText, isSearchActive) { notes, searchText, isSearchActive ->
+    val state = combine(notes, searchQuery, isSearchFocused) { notes, searchText, isSearchActive ->
         NoteListState(
             notes = searchNotes.execute(notes, searchText),
             searchText = searchText,
@@ -35,18 +39,18 @@ class NoteListViewModel @Inject constructor(
 
     fun loadNotes() {
         viewModelScope.launch {
-            savedStateHandle["notes"] = noteDataSource.getAllNotes()
+            savedStateHandle[PARAM_NOTES] = noteDataSource.getAllNotes()
         }
     }
 
     fun onSearchTextChange(text: String) {
-        savedStateHandle["searchText"] = text
+        savedStateHandle[PARAM_SEARCH_QUERY] = text
     }
 
     fun onToggleSearch() {
-        savedStateHandle["isSearchActive"] = !isSearchActive.value
-        if(!isSearchActive.value) {
-            savedStateHandle["searchText"] = ""
+        savedStateHandle[PARAM_IS_SEARCH_FOCUSED] = !isSearchFocused.value
+        if(!isSearchFocused.value) {
+            savedStateHandle[PARAM_SEARCH_QUERY] = ""
         }
     }
 
