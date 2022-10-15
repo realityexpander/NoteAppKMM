@@ -128,6 +128,8 @@ fun NoteListScreen(
     }
 }
 
+// Note does not use the ViewModel.
+// But you can modify the savedStateHandle values to change the UI state.
 @Preview
 @Composable
 fun NoteListScreenPreview() {
