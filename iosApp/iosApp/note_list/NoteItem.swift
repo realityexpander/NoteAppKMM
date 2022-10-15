@@ -42,6 +42,52 @@ struct NoteItem: View {
     }
 }
 
+// Add Identifiable to make it work with ForEach
+struct NoteItem2: View, Identifiable {
+    var id: ObjectIdentifier
+    let note: Note
+    let onDeleteClick: (Int) -> Void
+
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text(note.title)
+                    .font(.headline)
+                Text(note.content)
+                    .font(.subheadline)
+            }
+            Spacer()
+            Button(action: {
+                onDeleteClick(Int(truncating: note.id ?? 0))
+            }) {
+                Image(systemName: "trash")
+            }
+        }
+    }
+}
+
+struct NoteItem3: View {
+    let note: Note
+    let onDeleteClick: (Int) -> Void
+
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text(note.title)
+                    .font(.headline)
+                Text(note.content)
+                    .font(.subheadline)
+            }
+            Spacer()
+            Button(action: {
+                onDeleteClick(Int(truncating: note.id ?? 0))
+            }) {
+                Image(systemName: "trash")
+            }
+        }
+    }
+}
+
 struct NoteItem_Previews: PreviewProvider {
     static var previews: some View {
         NoteItem(
@@ -52,7 +98,38 @@ struct NoteItem_Previews: PreviewProvider {
                 colorHex: 0x0FF341,
                 created: LocalDateTimeUtil().now()
             ),
-            onDeleteClick: {}
+            onDeleteClick: { }
+        )
+    }
+}
+
+struct NoteItem_Previews2: PreviewProvider {
+    static var previews: some View {
+        NoteItem2(
+            id: ObjectIdentifier(self),
+            note: Note(
+                id: nil,
+                title: "My note",
+                content: "Note content",
+                colorHex: 0x0FF341,
+                created: LocalDateTimeUtil().now()
+            ),
+            onDeleteClick: {_ in }
+        )
+    }
+}
+
+struct NoteItem_Previews3: PreviewProvider {
+    static var previews: some View {
+        NoteItem3(
+            note: Note(
+                id: nil,
+                title: "My note",
+                content: "Note content",
+                colorHex: 0x0FF341,
+                created: LocalDateTimeUtil().now()
+            ),
+            onDeleteClick: {_ in }
         )
     }
 }

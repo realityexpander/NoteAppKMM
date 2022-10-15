@@ -14,21 +14,13 @@ extension NoteDetailScreen {  // Defines what the View is associated with this V
         private var noteId: Int64?
         @Published var noteTitle = ""      // two way binding with @Published and is also state (similar to MutableState in Compose)
         @Published var noteContent = ""
-        @Published private(set) var noteColor = Note.companion.getRandomNoteColor()
+        @Published var noteColor = Note.companion.getRandomNoteColor()
 
         init(noteDataSource: NoteDataSource? = nil) {
             self.noteDataSource = noteDataSource
         }
 
         func loadNoteIfExists(id: Int64?) {
-            // For showing previews in Xcode
-            if id == -2 {
-                noteTitle = "TEST Title"
-                noteContent = "TEST Content"
-                noteColor = Note.companion.getRandomNoteColor()
-                return
-            }
-            
             if id != nil {
                 noteId = id
                 noteDataSource?.getNoteById(id: id!, completionHandler: { note, _ in
