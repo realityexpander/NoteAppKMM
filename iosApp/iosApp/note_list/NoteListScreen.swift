@@ -6,14 +6,18 @@ import shared
 import SwiftUI
 
 struct NoteListScreen: View {
+
     private var noteDataSource: NoteDataSource
-    @StateObject var viewModel = NoteListViewModel(noteDataSource: nil) // @StateObject Makes only one instance of the viewModel (otherwise it would be re-created every time the NoteListScreen is redrawn)
+    @StateObject var viewModel = NoteListViewModel(noteDataSource: nil) // @StateObject Makes only one instance of the viewModel (otherwise it would be re-created every time the NoteListScreen is redrawn), this is similar to android MutableState
 
-    @State private var isNoteSelected = false       // @State is like mutableStateOf in Kotlin
-    @State private var selectedNoteId: Int64?       // automatically set to nil be default
+    @State private var isNoteSelected = false // @State is like mutableStateOf in Kotlin
+    @State private var selectedNoteId: Int64? // automatically set to nil be default
 
-    init(noteDataSource: NoteDataSource) {
+    private var previewNotes: [Note]? // for in IDE Previews only
+
+    init(noteDataSource: NoteDataSource, previewNotes: [Note]? = nil) {
         self.noteDataSource = noteDataSource
+        self.previewNotes = previewNotes
     }
 
     var body: some View {
@@ -24,16 +28,16 @@ struct NoteListScreen: View {
                         noteDataSource: self.noteDataSource,
                         noteId: selectedNoteId
                     ),
-                    isActive: $isNoteSelected) {  // $ means use two-way binding
+                    isActive: $isNoteSelected) { // $ means use two-way binding
                         EmptyView()
-                    }.hidden()  // make the link invisible (kinda hacky, but works)
+                    }.hidden() // make the link invisible (kinda hacky, but works)
 
-                HideableSearchTextField<NoteDetailScreen>(  // Where to nav to.
+                HideableSearchTextField<NoteDetailScreen>( // Must have type of screen that will nav to.
                     onSearchToggled: {
                         viewModel.toggleIsSearchActive()
                     },
                     destinationProvider: {
-                        NoteDetailScreen(  // must match above, where we want to nav to.
+                        NoteDetailScreen( // must match type above, where we want to nav to.
                             noteDataSource: noteDataSource,
                             noteId: selectedNoteId
                         )
@@ -51,70 +55,109 @@ struct NoteListScreen: View {
             }
 
             List {
-                // `\.self` gets the hash of the item, ie: viewModel.filteredNotes[x].hashCode, and the `\.self.id` gets the id, ie: viewModel.filteredNotes[x].id
-                ForEach(viewModel.filteredNotes, id: \.self.id) { note in
-                    Button(action: {
-                        isNoteSelected = true
-                        selectedNoteId = note.id?.int64Value  // Must Convert Kotlin Long to int64Value
-                    }) {
-                        NoteItem(note: note, onDeleteClick: {
-                            viewModel.deleteNoteById(id: note.id?.int64Value)  // convert kotlin Int to an int64Value
-                        })
+                // Only for preview (bypasses the viewmodel for getting notes data from DB)
+                if previewNotes != nil {
+                    ForEach(previewNotes ?? [], id: \.self.id) { note in
+                        Button(action: {
+                        }) {
+                            NoteItem(note: note, onDeleteClick: {})
+                        }
+                    }
+                } else {
+                    // `\.self` gets the hash of the item, ie: viewModel.filteredNotes[x].hashCode, and the `\.self.id` gets the id, ie: viewModel.filteredNotes[x].id
+                    ForEach(viewModel.filteredNotes, id: \.self.id) { note in
+                        Button(action: {
+                            isNoteSelected = true
+                            selectedNoteId = note.id?.int64Value // Must Convert Kotlin Long to int64Value
+                        }) {
+                            NoteItem(note: note, onDeleteClick: {
+                                viewModel.deleteNoteById(id: note.id?.int64Value) // convert kotlin Int to an int64Value
+                            })
+                        }
                     }
                 }
             }
             .onAppear {
-                viewModel.loadNotes()  // load the notes after the UI is built
+                viewModel.loadNotes() // load the notes after the UI is built
             }
-            .listStyle(.plain)   // remove the default boxed look
-            .listRowSeparator(.hidden)  // hide the separators
+            .listStyle(.plain) // remove the default boxed look
+            .listRowSeparator(.hidden) // hide the separators
         }
         .onAppear {
             viewModel.setNoteDataSource(noteDataSource: noteDataSource)
         }
         .navigationBarHidden(true)
-        .hoverEffect(/*@START_MENU_TOKEN@*/ .highlight/*@END_MENU_TOKEN@*/)
     }
 }
 
-func fundonothing() {
-    print("hello")
+struct NoteListScreen_Previews3: PreviewProvider {
+    static var notes: [Note] = []
+    static var initialized: Bool = false
+    
+    static var previews: some View {
+        if !NoteListScreen_Previews3.initialized {
+            for note in 1...10  {
+                NoteListScreen_Previews3.notes.append(
+                    Note(
+                        id: KotlinLong(value: Int64(note)),
+                        title: "Note title Preview #"+String(note) ,
+                        content: "Note Content Preview #" + String(note),
+                        colorHex: Int64(848548 * note),
+                        created: Kotlinx_datetimeLocalDateTime(
+                            date: Kotlinx_datetimeLocalDate(
+                                year: 2022,
+                                monthNumber: 10,
+                                dayOfMonth: 9
+                            ),
+                            time: Kotlinx_datetimeLocalTime(
+                                hour: 5,
+                                minute: 32,
+                                second: 10,
+                                nanosecond: 0
+                            )
+                        )
+                    )
+                )
+            }
+            
+            NoteListScreen_Previews3.initialized = true
+        }
+        
+        return NavigationView {
+            NoteListScreen(
+                noteDataSource: DatabaseModule().noteDataSource,
+                previewNotes: NoteListScreen_Previews3.notes
+            )
+        }
+    }
 }
 
 struct NoteListScreen_Previews: PreviewProvider {
     static var previews: some View {
-        VStack {
-            List {
-                ForEach(0 ..< 10) { note in
-                    Button(action: {}
-                    ) {
-                        NoteItem(
-                            note: Note(
-                                id: 1,
-                                title: "hello " + String(note),
-                                content: "goodbye",
-                                colorHex: Int64(8454748548 * note),
-                                created: Kotlinx_datetimeLocalDateTime(
-                                    date: Kotlinx_datetimeLocalDate(
-                                        year: 2022,
-                                        monthNumber: 10,
-                                        dayOfMonth: 9),
-                                    time: Kotlinx_datetimeLocalTime(
-                                        hour: 5,
-                                        minute: 32,
-                                        second: 10,
-                                        nanosecond: 0)
-                                )
-                            ),
-                            onDeleteClick: { fundonothing() }
-                        )
-                    }
-                }
-            }
-            // .onAppear(perform: { // Hack to make the list pop to top of screen
-            //    UITableView.appearance().contentInset.top = -35
-            // })
-        }
-        .padding(.top, -35.0) // Hack to make the list pop to top of screen
+        NoteItem(
+            note: Note(
+                id: KotlinLong(value: Int64(1)),
+                title: "Title for note " + String(1),
+                content: "Contents for note " + String(1),
+                colorHex: Int64(8454748548 * 1),
+                created: Kotlinx_datetimeLocalDateTime(
+                    date: Kotlinx_datetimeLocalDate(
+                        year: 2022,
+                        monthNumber: 10,
+                        dayOfMonth: 3
+                    ),
+                    time: Kotlinx_datetimeLocalTime(
+                        hour: 5,
+                        minute: 32,
+                        second: 10,
+                        nanosecond: 0
+                    )
+                )
+            ),
+            onDeleteClick: { doNothing() }
+        )
     }
+}
+func doNothing() {
+    print("hello")
 }

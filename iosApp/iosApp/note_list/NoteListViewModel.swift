@@ -7,15 +7,15 @@ import shared // imports cocoapods stuff (not need as many imports as android)
 
 extension NoteListScreen {
     @MainActor class NoteListViewModel: ObservableObject { // @MainActor means main thread, ObservableObject means reactive
-        private var noteDataSource: NoteDataSource?
+        private var noteDataSource: NoteDataSource?  // the ref to the SQLdelight DB
 
-        private let searchNotes = SearchNotes() // let is a constant value
+        private let searchNotes = SearchNotes() // UseCase for searching notes in SQLDelight DB
 
-        private var notes = [Note]() // Brackets indicate the type for notes
+        private var notes = [Note]() // Brackets indicate its an Array/List, and inside the brackets is the type
         @Published private(set) var filteredNotes = [Note]() // @Published makes `filteredNotes` a "reactive state"
         @Published var searchText = "" {
             didSet { // executes this block after the `searchText` is updated
-                filteredNotes = searchNotes.execute(notes: notes, query: searchText)
+                filteredNotes = searchNotes.execute(notes: notes, query: searchText) // performs the usecase for search
             }
         }
 
