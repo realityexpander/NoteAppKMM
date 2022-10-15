@@ -90,14 +90,14 @@ struct NoteListScreen: View {
     }
 }
 
-struct NoteListScreen_Previews3: PreviewProvider {
+struct NoteListScreen_Previews1: PreviewProvider {
     static var notes: [Note] = []
     static var initialized: Bool = false
     
     static var previews: some View {
-        if !NoteListScreen_Previews3.initialized {
+        if !NoteListScreen_Previews1.initialized {
             for note in 1...10  {
-                NoteListScreen_Previews3.notes.append(
+                NoteListScreen_Previews1.notes.append(
                     Note(
                         id: KotlinLong(value: Int64(note)),
                         title: "Note title Preview #"+String(note) ,
@@ -120,19 +120,19 @@ struct NoteListScreen_Previews3: PreviewProvider {
                 )
             }
             
-            NoteListScreen_Previews3.initialized = true
+            NoteListScreen_Previews1.initialized = true
         }
         
         return NavigationView {
             NoteListScreen(
                 noteDataSource: DatabaseModule().noteDataSource,
-                previewNotes: NoteListScreen_Previews3.notes
+                previewNotes: NoteListScreen_Previews1.notes
             )
         }
     }
 }
 
-struct NoteListScreen_Previews: PreviewProvider {
+struct NoteListScreen_Previews2: PreviewProvider {
     static var previews: some View {
         NoteItem(
             note: Note(
