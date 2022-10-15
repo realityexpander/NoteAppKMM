@@ -14,8 +14,8 @@ struct NoteDetailScreen: View {
 
     @Environment(\.presentationMode) var presentation  // @Environment similar to Android Context, presentationMode has backstack, for popping the backstack below
     
-    @State private var bgColor =
-    Color(.sRGB, red: 0.98, green: 0.9, blue: 0.2)
+//    @State private var bgColor =
+//        Color(.sRGB, red: 0.98, green: 0.9, blue: 0.2)
 
     init(noteDataSource: NoteDataSource, noteId: Int64? = nil) {
         self.noteDataSource = noteDataSource
@@ -29,27 +29,32 @@ struct NoteDetailScreen: View {
             TextField("Enter some content...", text: $viewModel.noteContent)
             Spacer()
         }.toolbar(content: {
-            ColorPicker(
-                "Color",
-                //selection: Color(hex: $viewModel.noteColor.wrappedValue)
-                selection: $bgColor
-            )
-            .frame(maxWidth: 30, minHeight: 40)
-            .padding()
-            .onChange(of: bgColor) { newColor in
-                let red = UInt((newColor.cgColor?.components?[0] ?? 0) * 255)
-                let green = UInt((newColor.cgColor?.components?[1] ?? 0) * 255)
-                let blue = UInt((newColor.cgColor?.components?[2] ?? 0) * 255)
-                viewModel.noteColor = Int64((red << 16) | (green << 8) | blue)
+            HStack {
+                Spacer()
+                ColorPicker(
+                    "Color",
+                    //selection: $bgColor
+                    selection: $viewModel.bgColor
+                )
+                .frame(maxWidth: 30, minHeight: 40)
+                .padding()
+                //.onChange(of: bgColor) { newColor in
+                .onChange(of: viewModel.bgColor) { newColor in
+                    let red = UInt((newColor.cgColor?.components?[0] ?? 0) * 255)
+                    let green = UInt((newColor.cgColor?.components?[1] ?? 0) * 255)
+                    let blue = UInt((newColor.cgColor?.components?[2] ?? 0) * 255)
+                    viewModel.noteColor = Int64((red << 16) | (green << 8) | blue)
+                }
+                
+                Button(action: {
+                    viewModel.saveNote {
+                        self.presentation.wrappedValue.dismiss()  // similar to popping the backstack
+                    }
+                }) {
+                    Image(systemName: "checkmark")
+                }
             }
             
-            Button(action: {
-                viewModel.saveNote {
-                    self.presentation.wrappedValue.dismiss()  // similar to popping the backstack
-                }
-            }) {
-                Image(systemName: "checkmark")
-            }
         })
         .padding()
         .background(Color(hex: viewModel.noteColor))
@@ -64,13 +69,8 @@ struct NoteDetailScreen: View {
 
 struct NoteDetailScreen_Previews: PreviewProvider {
     static var previews: some View {
-        NoteDetailScreen(noteDataSource: DatabaseModule().noteDataSource, noteId: -2)
+        return NavigationView {
+            NoteDetailScreen(noteDataSource: DatabaseModule().noteDataSource, noteId: nil)
+        }
     }
 }
-
-struct NoteDetailScreen_Previews2: PreviewProvider {
-    static var previews: some View {
-        NoteDetailScreen(noteDataSource: DatabaseModule().noteDataSource, noteId: nil)
-    }
-}
-
