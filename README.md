@@ -17,7 +17,7 @@ Kotlin Multiplatform Mobile Note App. Deployable to both iOS and Android.
 - SQLDelight Kotlin native library
 - Previews for composables and Swift UI in IDE
 
-- [Medium article I wrote on on custom @TypeParcelers in KMM](https://medium.com/@chrisathanas/how-to-use-parcels-on-kotlin-multiplatform-mobile-kmm-e29590816624)
+- [Medium article I wrote on on custom @TypeParcelers for KMM used in this project](https://medium.com/@chrisathanas/how-to-use-parcels-on-kotlin-multiplatform-mobile-kmm-e29590816624)
 
 <!--
 To install the Apk:
