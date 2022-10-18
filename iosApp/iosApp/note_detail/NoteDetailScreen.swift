@@ -13,7 +13,8 @@ struct NoteDetailScreen: View {
     @StateObject var viewModel = NoteDetailViewModel(noteDataSource: nil) // start with nil datasource
 
     @Environment(\.presentationMode) var presentation  // @Environment similar to Android Context, presentationMode has backstack, for popping the backstack below
-    
+
+    // To use @State in the View (not as elegant), see this: https://stackoverflow.com/a/60058909/2857200
 //    @State private var bgColor =
 //        Color(.sRGB, red: 0.98, green: 0.9, blue: 0.2)
 
@@ -38,7 +39,7 @@ struct NoteDetailScreen: View {
                 )
                 .frame(maxWidth: 30, minHeight: 40)
                 .padding()
-                //.onChange(of: bgColor) { newColor in
+                //.onChange(of: bgColor) { newColor in  // using @State in the View (not elegant)
                 .onChange(of: viewModel.bgColor) { newColor in
                     let red = UInt((newColor.cgColor?.components?[0] ?? 0) * 255)
                     let green = UInt((newColor.cgColor?.components?[1] ?? 0) * 255)

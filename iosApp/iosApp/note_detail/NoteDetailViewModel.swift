@@ -6,7 +6,7 @@
 
 import Foundation
 import shared
-import SwiftUI
+import SwiftUI // For Color
 
 extension NoteDetailScreen {  // Defines what the View is associated with this ViewModel
     @MainActor class NoteDetailViewModel: ObservableObject {
