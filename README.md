@@ -5,6 +5,9 @@ Kotlin Multiplatform Mobile Note App.
 [<img src="https://user-images.githubusercontent.com/5157474/195507303-872f0437-f23d-4a3b-aca7-907e20d4ac68.png" width="220"/>](https://user-images.githubusercontent.com/5157474/195507303-872f0437-f23d-4a3b-aca7-907e20d4ac68.png)
 [<img src="https://user-images.githubusercontent.com/5157474/195507329-70f37387-9621-46c0-84bd-dec4372b0001.png" width="220"/>](https://user-images.githubusercontent.com/5157474/195507329-70f37387-9621-46c0-84bd-dec4372b0001.png)
 [<img src="https://user-images.githubusercontent.com/5157474/195507366-e62659da-1c53-44f2-909a-8ea840720752.png" width="220"/>](https://user-images.githubusercontent.com/5157474/195507366-e62659da-1c53-44f2-909a-8ea840720752.png)
+[<img src="https://user-images.githubusercontent.com/5157474/196315916-5b375a9c-40fa-4adb-abe7-95acd967320b.png" width="220"/>](https://user-images.githubusercontent.com/5157474/196315916-5b375a9c-40fa-4adb-abe7-95acd967320b.png)
+[<img src="https://user-images.githubusercontent.com/5157474/196316060-4f59f827-7594-4174-9d96-7230edb8ef6f.png" width="220"/>](https://user-images.githubusercontent.com/5157474/196316060-4f59f827-7594-4174-9d96-7230edb8ef6f.png)
+
 
 
 ## Tech used
