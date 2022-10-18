@@ -1,6 +1,9 @@
 # NoteAppKMM
 Kotlin Multiplatform Mobile Note App. 
 - Deployable to both iOS and Android.
+- Add, Change and delete notes
+- Pick a note custom color
+- Search notes (title & content)
 
 [<img src="https://user-images.githubusercontent.com/5157474/195507303-872f0437-f23d-4a3b-aca7-907e20d4ac68.png" width="220"/>](https://user-images.githubusercontent.com/5157474/195507303-872f0437-f23d-4a3b-aca7-907e20d4ac68.png)
 [<img src="https://user-images.githubusercontent.com/5157474/195507329-70f37387-9621-46c0-84bd-dec4372b0001.png" width="220"/>](https://user-images.githubusercontent.com/5157474/195507329-70f37387-9621-46c0-84bd-dec4372b0001.png)
@@ -9,17 +12,16 @@ Kotlin Multiplatform Mobile Note App.
 [<img src="https://user-images.githubusercontent.com/5157474/196316060-4f59f827-7594-4174-9d96-7230edb8ef6f.png" width="220"/>](https://user-images.githubusercontent.com/5157474/196316060-4f59f827-7594-4174-9d96-7230edb8ef6f.png)
 
 
-
 ## Tech used
 - Kotlin
 - KMM (Kotlin Multiplatform Mobile)
 - Hilt
 - Compose
 - SwiftUI
-- KotlinX-serializations
+- KotlinX-serializations (Shared code)
 - Custom @TypeParcelers for Android
-- SQLDelight Kotlin native library
-- Previews for composables and Swift UI in IDE
+- SQLDelight Kotlin native library for Database (Shared code)
+- Previews for Compose and Swift UI in IDE
 
 - [Medium article I wrote on on custom @TypeParcelers for KMM used in this project](https://medium.com/@chrisathanas/how-to-use-parcels-on-kotlin-multiplatform-mobile-kmm-e29590816624)
 
